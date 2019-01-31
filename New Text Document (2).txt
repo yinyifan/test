@@ -1,0 +1,21 @@
+SELECT u.name, COUNT(e.company_name) as company_count
+from user u left join profile p on u.profile_id=p.id
+inner join experience e on p.id=e.profile_id
+inner join role r on u.role_id=r.id
+where r.name='alumni'
+GROUP BY u.name
+ORDER BY u.name;
+
+SELECT u.name, COUNT(e.company_name) as company_count
+from user u right join profile p on u.profile_id=p.id
+right join experience e on p.id=e.profile_id
+right join role r on u.role_id=r.id
+where r.name='alumni'
+GROUP BY u.name
+ORDER BY u.name;
+
+SELECT u.name
+from user u right join profile p on u.profile_id=p.id
+left join experience e on p.id=e.profile_id
+inner join role r on u.role_id=r.id
+where r.name='alumni'and comany_name=select (max(select count(comany_name) from experience group by u.name)) from experience 
